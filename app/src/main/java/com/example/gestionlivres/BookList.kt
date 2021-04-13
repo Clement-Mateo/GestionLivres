@@ -18,16 +18,41 @@ class BookList : AppCompatActivity() {
 
     companion object {
 
-        private val TAG = "Info"
+        val TAG = "Info"
+
+        val bookList: MutableList<Book> = mutableListOf()
+
+        var db: FirebaseFirestore? = null
+
+        var recyclerView: RecyclerView? = null
+
+        var bookAdapter: BookAdapter? = null
+
+        fun refreshListOfBook() {
+            bookList.clear()
+            db?.collection("books")
+                    ?.get()
+                    ?.addOnSuccessListener { result ->
+                        for (document in result) {
+                            bookList.add(
+                                    Book(document.id,
+                                            document.data["name"].toString(),
+                                            document.data["author"].toString(),
+                                            document.data["imageId"].toString(),
+                                            document.data["isReaded"] as Boolean
+                                    )
+                            )
+                            Log.i(TAG, "${document.id} => ${document.data}")
+                        }
+                        if(result.documents.size != 0) {
+                            bookAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                    ?.addOnFailureListener { exception ->
+                        Log.i(TAG, "Error getting documents.", exception)
+                    }
+        }
     }
-
-    private var db: FirebaseFirestore? = null
-
-    private val bookList: MutableList<Book> = mutableListOf()
-
-    private var recyclerView: RecyclerView? = null
-
-    private var bookAdapter: BookAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,28 +76,7 @@ class BookList : AppCompatActivity() {
          *********************************************/
 
         db = Firebase.firestore
-
-        db?.collection("books")
-            ?.get()
-            ?.addOnSuccessListener { result ->
-                for (document in result) {
-                    bookList.add(
-                        Book(
-                            document.data["name"].toString(),
-                            document.data["author"].toString(),
-                            document.data["imageId"].toString(),
-                            document.data["isReaded"] as Boolean
-                        )
-                    )
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                }
-                if(result.documents.size != 0) {
-                    bookAdapter?.notifyDataSetChanged()
-                }
-            }
-            ?.addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
+        refreshListOfBook()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -100,24 +104,25 @@ class BookList : AppCompatActivity() {
         var editTextAuthor = findViewById<EditText>(R.id.editTextAuthor)
         var editTextTextImageId = findViewById<EditText>(R.id.editTextTextImageId)
 
-        val book = Book(
-            editTextName.text.toString(),
-            editTextAuthor.text.toString(),
-            editTextTextImageId.text.toString(),
-            false
+        val book = Book(db?.collection("books")?.document()?.id.toString(),
+                editTextName.text.toString(),
+                editTextAuthor.text.toString(),
+                editTextTextImageId.text.toString(),
+                false
         )
         bookList.add(book)
 
-        val bookMap: Map<String, Any> = mapping(book)
+        var bookMap: Map<String, Any> = mapping(book)
 
-        db?.collection("books")
-            ?.add(bookMap)
+        db?.collection("books")?.document(book.id)
+            ?.set(bookMap)
             ?.addOnSuccessListener { documentReference ->
-                Log.d(TAG, bookMap["name"].toString() + " added")
+                Log.i(TAG, bookMap["name"].toString() + " added")
             }
             ?.addOnFailureListener { e ->
-                Log.w(TAG, "Error adding " + bookMap["name"].toString(), e)
+                Log.i(TAG, "Error adding " + bookMap["name"].toString(), e)
             }
+
         bookAdapter?.notifyItemInserted(bookList.size);
 
         editTextName.text.clear()
@@ -125,11 +130,5 @@ class BookList : AppCompatActivity() {
         editTextTextImageId.text.clear()
 
         Toast.makeText(this, "Ajout du livre " + book.name + " réussie !", Toast.LENGTH_SHORT).show()
-    }
-
-    fun remove(view: View) {
-//        val removeIndex = 2
-//        data.remove(removeIndex)
-//        adapter.notifyItemRemoved(removeIndex)
     }
 }
