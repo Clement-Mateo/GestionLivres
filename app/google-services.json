@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "345582732539",
+    "project_id": "gestionlivres-f4391",
+    "storage_bucket": "gestionlivres-f4391.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345582732539:android:89682b491cc40fcb299c5e",
+        "android_client_info": {
+          "package_name": "com.example.gestionlivres"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345582732539-6hrajj1r8kgi2o7l4sojcp9irvghkurd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI7eCRT5fcR-blC90SSSelup0HoH6LfkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345582732539-6hrajj1r8kgi2o7l4sojcp9irvghkurd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
