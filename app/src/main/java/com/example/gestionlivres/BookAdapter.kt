@@ -5,11 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import rx.subjects.PublishSubject
+
 
 class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookViewHolder>() {
 
@@ -25,18 +26,53 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
         val book = bookList[position]
         holder.updateWithBook(book)
 
+        var checkBoxIsreaded: CheckBox = holder.itemView.findViewById<CheckBox>(R.id.checkBoxIsReaded)
+
+        checkBoxIsreaded.setOnClickListener {
+            book.isReaded = checkBoxIsreaded.isChecked
+
+            val bookMap: Map<String, Any> = BookUtils.mapping(book)
+
+            BookList.db.collection("books")?.document(book.id)
+                    .set(bookMap)
+                    .addOnSuccessListener { documentReference ->
+                        Log.i(BookList.TAG, bookMap["name"].toString() + " checked as readed")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.i(BookList.TAG, "Error saving " + bookMap["name"].toString() + " as readed", e)
+                    }
+        }
+
         holder.itemView.setOnClickListener {
             onClickSubject.onNext(book)
-            startActivity(holder.itemView.context, Intent(holder.itemView.context, BookDetail::class.java), null)
+            val intent = Intent(holder.itemView.context, BookDetail::class.java)
+            intent.putExtra("book", BookUtils.mapping(book) as HashMap)
+            startActivity(holder.itemView.context, intent, null)
+        }
+
+        holder.itemView.findViewById<ImageButton>(R.id.btnDetail).setOnClickListener {
+            onClickSubject.onNext(book)
+            val intent = Intent(holder.itemView.context, BookDetail::class.java)
+            intent.putExtra("book", BookUtils.mapping(book) as HashMap)
+            startActivity(holder.itemView.context, intent, null)
+        }
+
+        holder.itemView.findViewById<ImageButton>(R.id.btnEdit).setOnClickListener {
+            val intent = Intent(holder.itemView.context, BookEdit::class.java)
+            intent.putExtra("book", BookUtils.mapping(book) as HashMap)
+            startActivity(holder.itemView.context, intent, null)
         }
 
         holder.itemView.findViewById<ImageButton>(R.id.btnDelete).setOnClickListener {
-            BookList.db?.collection("books")?.document(book.id.toString())
-                    ?.delete()
-                    ?.addOnSuccessListener {
+
+            BookList.db.collection("books").document(book.id.toString())
+                    .delete()
+                    .addOnSuccessListener {
                         Log.i(BookList.TAG, book.name + " successfully deleted!")
+
+                        Toast.makeText(holder.itemView.context, "Suppression réussie de " + book.name + " !", Toast.LENGTH_SHORT).show()
                     }
-                    ?.addOnFailureListener { e -> Log.i(BookList.TAG, "Error deleting" + book.name, e) }
+                    .addOnFailureListener { e -> Log.i(BookList.TAG, "Error deleting" + book.name, e) }
 
             BookList.refreshListOfBook()
             notifyDataSetChanged()
@@ -50,9 +86,18 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
 class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun updateWithBook(book: Book) {
-        val name = itemView.findViewById<TextView>(R.id.tv_name)
-        name.text = book.name
-        val author = itemView.findViewById<TextView>(R.id.tv_author)
-        author.text = "de " + book.author
+        val tvName = itemView.findViewById<TextView>(R.id.tvName)
+        val tvAuthor = itemView.findViewById<TextView>(R.id.tvAuthor)
+        val checkBoxIsReaded: CheckBox = itemView.findViewById(R.id.checkBoxIsReaded)
+        val bookImage = itemView.findViewById<ImageView>(R.id.bookImage)
+
+
+        tvName.text = book.name
+        tvAuthor.text = "de " + book.author
+        checkBoxIsReaded.isChecked = book.isReaded
+
+        if(book.imageUrl.length > 0) {
+            Picasso.get().load(book.imageUrl).resize(3000, 2000).centerInside().error(R.drawable.books).into(bookImage);
+        }
     }
 }

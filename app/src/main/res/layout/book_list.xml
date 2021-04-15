@@ -6,18 +6,21 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textPersonName" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="2dp"
+        android:background="@drawable/customborder"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextAuthor"
@@ -27,25 +30,24 @@
             android:hint="Author"
             android:inputType="textPersonName" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <EditText
+            android:id="@+id/editTextTextImageUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="50dp"
-            android:background="#FFFFFF"
+            android:ems="10"
+            android:hint="Image Url"
+            android:inputType="textPersonName" />
+
+        <ImageButton
+            android:id="@+id/btnAddBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#0000"
             android:cropToPadding="false"
             android:onClick="addBook"
             app:srcCompat="@drawable/ic_baseline_add_24" />
-    </LinearLayout>
 
-    <EditText
-        android:id="@+id/editTextTextImageId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Image Id"
-        android:inputType="textPersonName" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookList"

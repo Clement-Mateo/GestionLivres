@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "345582732539",
-    "project_id": "gestionlivres-f4391",
-    "storage_bucket": "gestionlivres-f4391.appspot.com"
+    "project_number": "509442792512",
+    "project_id": "gestionlivres-44581",
+    "storage_bucket": "gestionlivres-44581.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:345582732539:android:89682b491cc40fcb299c5e",
+        "mobilesdk_app_id": "1:509442792512:android:c670df269166a9514c13a5",
         "android_client_info": {
           "package_name": "com.example.gestionlivres"
         }
       },
       "oauth_client": [
         {
-          "client_id": "345582732539-6hrajj1r8kgi2o7l4sojcp9irvghkurd.apps.googleusercontent.com",
+          "client_id": "509442792512-vkliiu1lhd77fhtcrnfpk9vur0hbdpgc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDI7eCRT5fcR-blC90SSSelup0HoH6LfkE"
+          "current_key": "AIzaSyCM7fQewqreMGcVMjW27TJ35wSsRJms37c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "345582732539-6hrajj1r8kgi2o7l4sojcp9irvghkurd.apps.googleusercontent.com",
+              "client_id": "509442792512-vkliiu1lhd77fhtcrnfpk9vur0hbdpgc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
