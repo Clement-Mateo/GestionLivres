@@ -1,44 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextName_edit"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_height="match_parent"
+        android:layout_gravity="clip_horizontal"
         android:gravity="center"
-        android:hint="Name"
-        android:inputType="textPersonName" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextAuthor_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Author"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/editTextName_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Name"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editTextTextImageUrl_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Image Url"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/editTextAuthor_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Author"
+            android:inputType="textPersonName" />
 
-    <ImageButton
-        android:id="@+id/btnEdit_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#0000"
-        android:onClick="editBook"
-        app:srcCompat="@drawable/ic_baseline_edit_24_60dp" />
+        <EditText
+            android:id="@+id/editTextTextImageUrl_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Image Url"
+            android:inputType="textPersonName" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/editTextResume_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Resume"
+            android:inputType="textPersonName" />
+
+        <ImageButton
+            android:id="@+id/btnEdit_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#0000"
+            android:onClick="editBook"
+            app:srcCompat="@drawable/ic_baseline_edit_24_60dp" />
+
+    </LinearLayout>
+
+</ScrollView>

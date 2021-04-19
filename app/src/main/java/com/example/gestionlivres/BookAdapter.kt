@@ -26,7 +26,7 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
         val book = bookList[position]
         holder.updateWithBook(book)
 
-        var checkBoxIsreaded: CheckBox = holder.itemView.findViewById<CheckBox>(R.id.checkBoxIsReaded)
+        var checkBoxIsreaded: CheckBox = holder.itemView.findViewById(R.id.checkBoxIsReaded)
 
         checkBoxIsreaded.setOnClickListener {
             book.isReaded = checkBoxIsreaded.isChecked
@@ -35,7 +35,7 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
 
             BookList.db.collection("books")?.document(book.id)
                     .set(bookMap)
-                    .addOnSuccessListener { documentReference ->
+                    .addOnSuccessListener {
                         Log.i(BookList.TAG, bookMap["name"].toString() + " checked as readed")
                     }
                     .addOnFailureListener { e ->

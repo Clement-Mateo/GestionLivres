@@ -12,7 +12,8 @@ class BookEdit  : AppCompatActivity() {
     lateinit var book: Book
     lateinit var editTextName: EditText
     lateinit var editTextAuthor: EditText
-    lateinit var editTextTextImageUrl: EditText
+    lateinit var editTextImageUrl: EditText
+    lateinit var editTextResume: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,18 +23,21 @@ class BookEdit  : AppCompatActivity() {
 
         editTextName = findViewById(R.id.editTextName_edit)
         editTextAuthor = findViewById(R.id.editTextAuthor_edit)
-        editTextTextImageUrl = findViewById(R.id.editTextTextImageUrl_edit)
+        editTextImageUrl = findViewById(R.id.editTextTextImageUrl_edit)
+        editTextResume = findViewById(R.id.editTextResume_edit)
 
         editTextName.setText(book.name)
         editTextAuthor.setText(book.author)
-        editTextTextImageUrl.setText(book.imageUrl)
+        editTextImageUrl.setText(book.imageUrl)
+        editTextResume.setText(book.resume)
     }
 
     fun editBook(view: View) {
 
         book.name = editTextName.text.toString()
         book.author = editTextAuthor.text.toString()
-        book.imageUrl = editTextTextImageUrl.text.toString()
+        book.imageUrl = editTextImageUrl.text.toString()
+        book.resume = editTextResume.text.toString()
 
         val bookMap: Map<String, Any> = BookUtils.mapping(book)
 
@@ -49,5 +53,7 @@ class BookEdit  : AppCompatActivity() {
                 ?.addOnFailureListener { e ->
                     Log.i(BookList.TAG, "Error editing " + bookMap["name"].toString(), e)
                 }
+
+        BookList.refreshListOfBook()
     }
 }

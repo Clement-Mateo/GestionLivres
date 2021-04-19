@@ -20,11 +20,13 @@ class BookUtils {
         fun getBookFromExtra(intent: Intent): Book {
             var map: HashMap<String, Any> = intent.getSerializableExtra("book") as HashMap<String, Any>
             return Book(
-                map["id"].toString(),
-                map["name"].toString(),
-                map["author"].toString(),
-                map["imageUrl"].toString(),
-                map["isReaded"] as Boolean
+                    map["id"].toString(),
+                    map["name"].toString(),
+                    map["userId"].toString(),
+                    map["author"].toString(),
+                    map["imageUrl"].toString(),
+                    map["isReaded"] as Boolean,
+                    map["resume"].toString()
             )
         }
     }

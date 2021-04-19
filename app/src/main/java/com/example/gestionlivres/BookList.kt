@@ -1,14 +1,15 @@
 package com.example.gestionlivres
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -34,15 +35,19 @@ class BookList : AppCompatActivity() {
                     .get()
                     .addOnSuccessListener { result ->
                         for (document in result) {
-                            bookList.add(
-                                    Book(document.id,
-                                            document.data["name"].toString(),
-                                            document.data["author"].toString(),
-                                            document.data["imageUrl"].toString(),
-                                            document.data["isReaded"] as Boolean
-                                    )
-                            )
-                            Log.i(TAG, "${document.id} => ${document.data}")
+                            if(FirebaseAuth.getInstance().currentUser.uid == document.data["userId"].toString()) {
+                                bookList.add(
+                                        Book(document.id,
+                                                document.data["name"].toString(),
+                                                document.data["userId"].toString(),
+                                                document.data["author"].toString(),
+                                                document.data["imageUrl"].toString(),
+                                                document.data["isReaded"] as Boolean,
+                                                document.data["resume"].toString()
+                                        )
+                                )
+                                Log.i(TAG, "${document.id} => ${document.data}")
+                            }
                         }
                         if(result.documents.size != 0) {
                             bookAdapter.notifyDataSetChanged()
@@ -57,6 +62,10 @@ class BookList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_list)
+
+        findViewById<ImageButton>(R.id.btnAddBook).setOnClickListener {
+            ContextCompat.startActivity(this, Intent(this, BookAdd::class.java), null)
+        }
 
         /*********************************************
          **************** RecyclerView ***************
@@ -77,40 +86,6 @@ class BookList : AppCompatActivity() {
 
         db = Firebase.firestore
         refreshListOfBook()
-    }
-
-    fun addBook(view: View) {
-
-        var editTextName = findViewById<EditText>(R.id.editTextName)
-        var editTextAuthor = findViewById<EditText>(R.id.editTextAuthor)
-        var editTextTextImageId = findViewById<EditText>(R.id.editTextTextImageUrl)
-
-        val book = Book(db.collection("books").document().id,
-                editTextName.text.toString(),
-                editTextAuthor.text.toString(),
-                editTextTextImageId.text.toString(),
-                false
-        )
-        bookList.add(book)
-
-        val bookMap: Map<String, Any> = BookUtils.mapping(book)
-
-        db?.collection("books").document(book.id)
-                .set(bookMap)
-                .addOnSuccessListener {
-                    Log.i(TAG, bookMap["name"].toString() + " added")
-
-                    bookAdapter.notifyItemInserted(bookList.size);
-
-                    editTextName.text.clear()
-                    editTextAuthor.text.clear()
-                    editTextTextImageId.text.clear()
-
-                    Toast.makeText(this, "Ajout du livre " + book.name + " réussie !", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e ->
-                    Log.i(TAG, "Error adding " + bookMap["name"].toString(), e)
-                }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
