@@ -1,5 +1,6 @@
 package com.example.gestionlivres
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -48,12 +49,10 @@ class BookEdit  : AppCompatActivity() {
 
                     Toast.makeText(this, "Edition du livre " + book.name + " réussie !", Toast.LENGTH_SHORT).show()
 
-                    BookList.refreshListOfBook()
+                    startActivity(Intent(this, BookList::class.java))
                 }
                 ?.addOnFailureListener { e ->
                     Log.i(BookList.TAG, "Error editing " + bookMap["name"].toString(), e)
                 }
-
-        BookList.refreshListOfBook()
     }
 }

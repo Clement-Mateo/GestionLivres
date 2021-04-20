@@ -9,12 +9,10 @@ import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import rx.subjects.PublishSubject
 
 
 class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookViewHolder>() {
 
-    private val onClickSubject: PublishSubject<Book> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val context = parent.context
@@ -44,14 +42,12 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
         }
 
         holder.itemView.setOnClickListener {
-            onClickSubject.onNext(book)
             val intent = Intent(holder.itemView.context, BookDetail::class.java)
             intent.putExtra("book", BookUtils.mapping(book) as HashMap)
             startActivity(holder.itemView.context, intent, null)
         }
 
         holder.itemView.findViewById<ImageButton>(R.id.btnDetail).setOnClickListener {
-            onClickSubject.onNext(book)
             val intent = Intent(holder.itemView.context, BookDetail::class.java)
             intent.putExtra("book", BookUtils.mapping(book) as HashMap)
             startActivity(holder.itemView.context, intent, null)

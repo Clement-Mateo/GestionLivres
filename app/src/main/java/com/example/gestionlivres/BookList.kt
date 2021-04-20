@@ -3,7 +3,6 @@ package com.example.gestionlivres
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -88,10 +87,8 @@ class BookList : AppCompatActivity() {
         refreshListOfBook()
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            System.exit(0)
-        }
-        return true
+    override fun onDestroy() {
+        super.onDestroy()
+        ConnexionOuCreationCompte.connexionOuCreationCompte(this)
     }
 }
