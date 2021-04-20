@@ -28,10 +28,16 @@ Si vous ne renseigner pas le champ resume du livre, alors celui ci se remplira a
 Ainsi votre livre apparaitre désormé dans la liste de vos livres :  
 ![livre_ajouté](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/livre_ajouté.png?raw=true)
 
-Vous pouvez cliquer sur un livre pour le voir en detail (plus grand ainsi qu'avec une plus grosse description) :  
+Vous pouvez cliquer sur un livre pour le voir en detail (plus grand et vous pouvez visioner sa description) :  
 ![detail_livre_1](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/detail_livre_1.png?raw=true)  
 ![detail_livre_2](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/detail_livre_2.png?raw=true)  
 
+Le crayon bleu vous permet d'éditer un livre :  
 ![edition_livre](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/edition_livre.png?raw=true)
 
+Et la poubelle rouge permet comme vous vous en doutez de supprimer le livre :)
+
+Vous ne verrez que les livres du compte avec lequel vous vous êtes connectés, libre à vous d'avoir plusieurs compte si vous le souhaitez, vos amis pourrons aussi se connecter sur leur compte sur l'application installée sur votre appareil pour acceder à leur liste de livres :)  
+
+Ceci est possible est possible parce que les données de l'application sont directement stockées dans la basse Firestore de Firebase :  
 ![firestore](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/firestore.png?raw=true)
