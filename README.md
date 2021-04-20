@@ -4,7 +4,7 @@ Petite appli android qui fait du CRUD (Create, read, update and delete) sur des 
 Gestion assez poussée des images chargées via un url (si ce dernier est absent ou ne fonctionne pas, une image par défaut en local sera mise à la place), retaillées et recentrées tout en gardant leur ratio d'origine.
 
 ## Vous pouvez installer l'application en téléchargeant ce fichier :
-[Application](https://github.com/clementor5/GestionLivres/blob/master/apk/app-debug.apk)
+[Application](https://github.com/clementor5/GestionLivres/raw/master/apk/app-debug.apk)
 
 Lorsque vous lancez l'application, celle ci vous demande votre email afin de vous connectez :  
 ![connexion_1](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/connexion_1.png?raw=true)  
