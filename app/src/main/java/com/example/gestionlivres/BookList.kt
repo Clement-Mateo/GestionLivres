@@ -71,12 +71,12 @@ class BookList : AppCompatActivity() {
          **************** RecyclerView ***************
          *********************************************/
 
-        recyclerView = findViewById(R.id.bookList)
+        recyclerView = findViewById(R.id.bookListRecyclerView)
 
         val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.VERTICAL
-
         recyclerView.layoutManager = manager
+
         bookAdapter = BookAdapter(bookList)
         recyclerView.adapter = bookAdapter
 
