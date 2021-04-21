@@ -13,25 +13,13 @@ class ConnexionOuCreationCompte : AppCompatActivity() {
 
     companion object {
         private const val RC_SIGN_IN = 123
-
-        fun connexionOuCreationCompte(activity: Activity) {
-            // Choose authentication providers
-            val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
-
-            activity.startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .build(),
-                    RC_SIGN_IN)
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading)
 
-        connexionOuCreationCompte(this)
+        connexionOuCreationCompte()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -43,13 +31,26 @@ class ConnexionOuCreationCompte : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 val user = FirebaseAuth.getInstance().currentUser
 
-                Toast.makeText(this, "Connexion réussie en tant que " + user.displayName +"!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Connexion réussie en tant que " + user.displayName +" !", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, BookList::class.java))
+                finish()
 
             } else {
-                Toast.makeText(this, "Echec de onnexion !", Toast.LENGTH_SHORT).show()
-                connexionOuCreationCompte(this)
+                Toast.makeText(this, "Echec de la connexion", Toast.LENGTH_SHORT).show()
+                connexionOuCreationCompte()
             }
         }
+    }
+
+    fun connexionOuCreationCompte() {
+        // Choose authentication providers
+        val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN)
     }
 }

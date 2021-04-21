@@ -1,6 +1,5 @@
 package com.example.gestionlivres
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -53,7 +52,7 @@ class BookAdd : AppCompatActivity() {
 
                     Toast.makeText(this, "Ajout du livre " + book.name + " réussie !", Toast.LENGTH_SHORT).show()
 
-                    startActivity(Intent(this, BookList::class.java))
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Log.i(BookList.TAG, "Error adding " + bookMap["name"].toString(), e)

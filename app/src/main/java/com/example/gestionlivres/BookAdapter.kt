@@ -24,10 +24,10 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
         val book = bookList[position]
         holder.updateWithBook(book)
 
-        var checkBoxIsreaded: CheckBox = holder.itemView.findViewById(R.id.checkBoxIsReaded)
+        var checkBoxIsReaded: CheckBox = holder.itemView.findViewById(R.id.checkBoxIsReaded)
 
-        checkBoxIsreaded.setOnClickListener {
-            book.isReaded = checkBoxIsreaded.isChecked
+        checkBoxIsReaded.setOnClickListener {
+            book.isReaded = checkBoxIsReaded.isChecked
 
             val bookMap: Map<String, Any> = BookUtils.mapping(book)
 
@@ -71,7 +71,6 @@ class BookAdapter(private var bookList: List<Book>) : RecyclerView.Adapter<BookV
                     .addOnFailureListener { e -> Log.i(BookList.TAG, "Error deleting" + book.name, e) }
 
             BookList.refreshListOfBook()
-            notifyDataSetChanged()
         }
     }
 
@@ -94,6 +93,8 @@ class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         if(book.imageUrl.length > 0) {
             Picasso.get().load(book.imageUrl).resize(3000, 2000).centerInside().error(R.drawable.books).into(bookImage);
+        } else {
+            bookImage.setImageDrawable(itemView.resources.getDrawable(R.drawable.books))
         }
     }
 }

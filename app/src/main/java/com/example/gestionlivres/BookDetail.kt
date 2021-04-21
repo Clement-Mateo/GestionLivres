@@ -24,6 +24,8 @@ class BookDetail : AppCompatActivity() {
 
         if(book.imageUrl.length > 0) {
             Picasso.get().load(book.imageUrl).resize(3000, 2000).centerInside().error(R.drawable.books).into(bookImage);
+        } else {
+            bookImage.setImageDrawable(resources.getDrawable(R.drawable.books))
         }
     }
 }

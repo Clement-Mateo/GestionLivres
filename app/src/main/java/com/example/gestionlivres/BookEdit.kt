@@ -1,6 +1,5 @@
 package com.example.gestionlivres
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,7 +36,9 @@ class BookEdit  : AppCompatActivity() {
 
         book.name = editTextName.text.toString()
         book.author = editTextAuthor.text.toString()
-        book.imageUrl = editTextImageUrl.text.toString()
+        if(editTextImageUrl.text.length > 0) {
+            book.imageUrl = editTextImageUrl.text.toString()
+        }
         book.resume = editTextResume.text.toString()
 
         val bookMap: Map<String, Any> = BookUtils.mapping(book)
@@ -47,9 +48,11 @@ class BookEdit  : AppCompatActivity() {
                 ?.addOnSuccessListener { documentReference ->
                     Log.i(BookList.TAG, bookMap["name"].toString() + " edited")
 
+                    BookList.refreshListOfBook()
+
                     Toast.makeText(this, "Edition du livre " + book.name + " réussie !", Toast.LENGTH_SHORT).show()
 
-                    startActivity(Intent(this, BookList::class.java))
+                    finish()
                 }
                 ?.addOnFailureListener { e ->
                     Log.i(BookList.TAG, "Error editing " + bookMap["name"].toString(), e)

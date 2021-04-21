@@ -3,11 +3,14 @@ package com.example.gestionlivres
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -48,7 +51,7 @@ class BookList : AppCompatActivity() {
                                 Log.i(TAG, "${document.id} => ${document.data}")
                             }
                         }
-                        if(result.documents.size != 0) {
+                        if(result.documents.size > 0) {
                             bookAdapter.notifyDataSetChanged()
                         }
                     }
@@ -61,10 +64,6 @@ class BookList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.book_list)
-
-        findViewById<ImageButton>(R.id.btnAddBook).setOnClickListener {
-            ContextCompat.startActivity(this, Intent(this, BookAdd::class.java), null)
-        }
 
         /*********************************************
          **************** RecyclerView ***************
@@ -85,10 +84,31 @@ class BookList : AppCompatActivity() {
 
         db = Firebase.firestore
         refreshListOfBook()
+
+        /*********************************************
+         ********** listeners des bouttons ***********
+         *********************************************/
+
+        findViewById<ImageButton>(R.id.btnAddBook).setOnClickListener {
+            ContextCompat.startActivity(this, Intent(this, BookAdd::class.java), null)
+        }
+
+        findViewById<ImageButton>(R.id.btnLogOut).setOnClickListener {
+            logOut()
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        ConnexionOuCreationCompte.connexionOuCreationCompte(this)
+    fun logOut() {
+        AuthUI.getInstance().signOut(this)
+        Toast.makeText(this, "Deconnexion réussie !", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, ConnexionOuCreationCompte::class.java))
+        finish()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            logOut()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
