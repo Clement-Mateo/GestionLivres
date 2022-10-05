@@ -20,7 +20,7 @@ Le compte va alors automatiquement être ajouté dans la liste des utilisateurs 
 ![firebase_auth_1](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/firebase_auth_1.png?raw=true)  
 ![firebase_auth_2](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/firebase_auth_2.png?raw=true)  
 
-Une fois que vous êtes connectés, si c'est la première fois que vous vous connectez, alors par défaut votre compte ne sera associé àn aucun livre :
+Une fois que vous êtes connectés, si c'est la première fois que vous vous connectez, alors par défaut votre compte ne sera associé à aucun livre :
 
 ![accueil_vide](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/accueil_vide.png?raw=true)
 
@@ -51,6 +51,6 @@ Et la poubelle rouge permet comme vous vous en doutez de supprimer le livre :)
 
 Vous ne verrez que les livres du compte avec lequel vous vous êtes connectés, libre à vous d'avoir plusieurs compte si vous le souhaitez, vos amis pourrons aussi se connecter sur leur compte sur l'application installée sur votre appareil pour acceder à leur liste de livres :)
 
-Ceci est possible est possible parce que les données de l'application sont directement stockées dans la basse Firestore de Firebase :
+Ceci est possible est possible parce que les données de l'application sont directement stockées dans la base Firestore de Firebase :
 
 ![firestore](https://github.com/clementor5/GestionLivres/blob/master/IMG_README/firestore.png?raw=true)
